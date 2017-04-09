@@ -1,6 +1,6 @@
 module.exports = {
 
 	'secret': 'ilovescotchyscotch',
-	'database': 'localhost/auth1'
+	'database': 'localhost/auth2'
 
 };

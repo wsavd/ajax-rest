@@ -1,6 +1,12 @@
 extends layout.pug
 block content
   button#get-button READ
+  form#submit(action='http://localhost:8085/api/authenticate', method='POST')
+    input(name='name', value='Nicky', type='text')
+    |  
+    input(name='password', value='password', type='text')
+    |  
+    button(type='submit') Sign in
   table
     thead
       tr
