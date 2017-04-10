@@ -1,6 +1,28 @@
 $(document).ready(function  () {
+        //создаем запись в бд о новом юзере
+        $("#signup-button").on('click', function  (e) {
+            var name = $('#name');
+            var password = $("#password");
+            var dataForm = {
+                name: name.val(),
+                password: password.val()
+            }
+	 		e.preventDefault();
+            $.ajax({
+                url: 'http://localhost:8087/signup',
+                type: 'post',
+                dataType: 'json',
+                data: dataForm,
+                success: function(data) {
+                    console.log("succes")
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+                });
+	 	})
         //POST /api/authenticate проверили что такой user в базе есть, сохранили, полученный токен в локальное хранилище
-	 	$("#post-button").on('click', function  (e) {
+	 	$("#signin-button").on('click', function  (e) {
             var name = $('#name');
             var password = $("#password");
             var dataForm = {
@@ -17,14 +39,17 @@ $(document).ready(function  () {
                     console.log("succes")
                     localStorage.setItem('token', data.token);
                     console.log(data.token)
+                    console.log(data._id)
+                    userList()
                 },
                 error: function (error) {
                     console.log(error);
                 }
                 });
-	 	})
+	 	});
 //отправлят ajax 
-$('#get-button').on('click', function() {
+//$('#get-button').on('click', function() {
+function userList() {
     $.ajax({
     url: 'http://localhost:8087/api/users',
     type: 'GET',
@@ -53,5 +78,6 @@ $('#get-button').on('click', function() {
         console.log(error);
                 }
     });
+};
 });
-});
+//});
