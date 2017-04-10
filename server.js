@@ -15,7 +15,7 @@ var path = require('path');
 // =================================================================
 // configuration ===================================================
 // =================================================================
-var port = process.env.PORT || 8085; // used to create, sign, and verify tokens
+var port = process.env.PORT || 8087; // used to create, sign, and verify tokens
 mongoose.Promise = global.Promise;
 mongoose.connect(config.database); // connect to database
 app.set('superSecret', config.secret); // secret variable
@@ -34,19 +34,16 @@ app.use(morgan('dev'));
 // =================================================================
 // routes ==========================================================
 // =================================================================
-app.get('/setup', function(req, res) {
-
-	// create a sample user
-	var nick = new User({ 
-		name: 'Nicky', 
-		password: 'password',
-		admin: true 
-	});
-	nick.save(function(err) {
-		if (err) throw err;
-
-		console.log('User saved successfully');
-		res.json(nick);
+app.post('/signup', function(req, res) {   
+  var user = new User({
+        name: req.body.name,
+        password: req.body.password
+    });
+  user.save(function(err, result) {
+		if(err){
+			res.send(err);
+		}
+		res.json(result);
 	});
 });
 
